@@ -1,0 +1,62 @@
+use Libraries.Game.Game
+use Libraries.Game.Graphics.Model
+use Libraries.Game.Graphics.Color
+use Libraries.Game.InputMonitor
+use Libraries.Interface.Events.KeyboardEvent
+use Libraries.Game.DesktopConfiguration
+use Libraries.Game.Graphics.Gradient
+use Libraries.Interface.Layouts.Layout
+use Libraries.Game.Graphics.Drawable
+
+class Main is Game
+DesktopConfiguration config
+KeyboardEvent key
+InputMonitor im
+Color color
+Gradient gradient
+Drawable box1
+Drawable background
+Layout backgroundLayout
+Layout box1Layout
+
+    action Main
+        config = GetDesktopConfiguration()
+        config:resizable = true
+        StartGame()
+    end
+
+    action CreateGame
+        backgroundLayout:SetPercentageHeight(1)
+        backgroundLayout:SetPercentageWidth(1)
+
+        gradient:Set(color:Cyan(),color:White(),color:Cyan(),color:White())
+        background:LoadFilledRectangle(350,100,gradient)
+        background:AddLayout(backgroundLayout)
+        background:Resize()
+        Add(background)
+
+        box1Layout:SetPercentageHeight(0.1)
+        box1Layout:SetPercentageWidth(0.05)
+        box1Layout:SetPercentageX(0.5)
+        box1Layout:SetPercentageY(0.5)
+        box1Layout:SetPercentageOriginY(0.5)
+        box1Layout:SetPercentageOriginX(0.5)
+
+        box1:LoadFilledRectangle(1,1,color:Purple())
+        box1:SetPosition(500,500)
+        box1:AddLayout(box1Layout)
+        box1:Resize()
+        Add(box1)
+
+    end
+
+    action Update(number seconds)
+        if im:IsKeyPressed(key:X)
+            Exit()
+        end
+        if im:IsKeyPressed(key:UP)
+            box1:MoveY(5)
+        end
+//hello    
+    end
+end
